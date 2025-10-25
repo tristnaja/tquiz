@@ -1,4 +1,4 @@
-import Title from "./pages/home/Title";
+import Title from "./pages/title/Title";
 
 function App() {
     return <Title />

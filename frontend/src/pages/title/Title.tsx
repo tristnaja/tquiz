@@ -5,7 +5,7 @@ function Home() {
     const navigate = useNavigate();
     const handleStart: MouseEventHandler<HTMLButtonElement> = (event) => {
         event.preventDefault();
-        navigate("/signin");
+        navigate("/sign-in");
     }
     return (
         <div className="relative w-screen h-screen bg-dot">

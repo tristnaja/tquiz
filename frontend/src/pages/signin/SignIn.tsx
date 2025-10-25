@@ -3,16 +3,23 @@ import { useNavigate } from "react-router-dom";
 
 function SignIn() {
     const navigate = useNavigate();
+
+    function handleSignIn(e: React.MouseEvent<HTMLFormElement>) {
+        e.preventDefault();
+        navigate('/quiz');
+    }
+
     const handleRedirectToSignUp: MouseEventHandler<HTMLSpanElement> = (event) => {
         event.preventDefault();
-        navigate("/signup", { replace: true });
+        navigate("/sign-up", { replace: true });
     }
+
     return (
         <div className="relative w-screen h-screen bg-dot">
             <div className="bg-black absolute inset-0 opacity-40" />
             <div className="absolute inset-0 flex flex-col justify-center items-center bg-transparent">
                 <h1 className="font-inter-black text-white text-[96px]">TQUIZ</h1>
-                <form className="px-8 py-11 border-2 border-white rounded-2xl flex flex-col gap-5 justify-center items-center text-white">
+                <form onSubmit={handleSignIn} className="px-8 py-11 border-2 border-white rounded-2xl flex flex-col gap-5 justify-center items-center text-white">
                     <div>
                         <label htmlFor="email" className="block font-inter-medium text-[14px] mb-1">email:</label>
                         <input type="text" name="email" className="border-2 border-light-grey rounded-md text-[18px] px-5 py-2 w-[364px]" />

@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from fastapi.security import HTTPBearer
 from jose import JWTError, jwt
 
 from app import models, schemas, utils, database
@@ -8,7 +9,7 @@ from app.config import settings  # to get env vars
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+oauth2_scheme = HTTPBearer()
 
 
 # Dependency
@@ -42,24 +43,37 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 # Login
 @router.post("/login", response_model=schemas.Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def login(user_data: schemas.UserLogin, response: Response, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(
-        models.User.username == form_data.username).first()
+        models.User.email == user_data.email).first()
 
-    if not user or not utils.verify_password(form_data.password, user.password):
+    if not user or not utils.verify_password(user_data.password, user.password):
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
-    access_token = utils.create_access_token(
+    token = utils.create_access_token(
         data={"sub": str(user.id), "username": user.username,
               "email": user.email}
     )
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    response = JSONResponse(content={"message": "Login successful"})
+    response.set_cookie(
+        key="access_token",
+        value=token,
+        httponly=True,
+        secure=False,
+        samesite="None",
+        max_age=3600,
+    )
+
+    return response
 
 
 # Protected route example
 @router.get("/me", response_model=schemas.UserResponse)
-def get_me(token: str = Depends(oauth2_scheme)):
+def get_me(request: Request):
+    token = request.cookies.get("access_token")
+    if not token:
+        raise HTTPException(status_code=401, detail="Missing Token")
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
                              algorithms=[settings.ALGORITHM])
@@ -71,3 +85,9 @@ def get_me(token: str = Depends(oauth2_scheme)):
         return {"username": username, "email": email, "id": id}
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
+
+
+@router.post("/logout")
+def logout(response: Response):
+    response.delete_cookie("access_token")
+    return {"message": "Logout Successful"}

@@ -41,7 +41,7 @@ function SignUp() {
         <div className="relative w-screen h-screen bg-dot">
             <div className="bg-black absolute inset-0 opacity-40" />
             <div className="absolute inset-0 flex flex-col justify-center items-center bg-transparent">
-                <h1 className="font-inter-black text-white text-[96px]">TQUIZ</h1>
+                <h1 className="font-inter-black text-white text-[96px] select-none">TQUIZ</h1>
                 <form onSubmit={handleSignUp} className="px-8 py-11 border-2 border-white rounded-2xl flex flex-col gap-5 justify-center items-center text-white">
                     <div>
                         <label htmlFor="username" className="block font-inter-medium text-[14px] mb-1">username:</label>

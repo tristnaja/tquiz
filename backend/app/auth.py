@@ -61,7 +61,7 @@ def login(user_data: schemas.UserLogin, response: Response, db: Session = Depend
         value=token,
         httponly=True,
         secure=False,
-        samesite="None",
+        samesite="Lax",
         max_age=3600,
     )
 

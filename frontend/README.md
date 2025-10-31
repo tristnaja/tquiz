@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# TQUIZ - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for the TQUIZ application, a modern and interactive quiz platform. It is built using React, Vite, and TypeScript, and styled with Tailwind CSS.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Development Server](#running-the-development-server)
+- [Available Scripts](#available-scripts)
+- [Folder Structure](#folder-structure)
+- [Key Dependencies](#key-dependencies)
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/) (or [yarn](https://yarnpkg.com/))
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  Navigate to the `frontend` directory.
+2.  Run the following command to install the necessary dependencies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    ```sh
+    npm install
+    ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Running the Development Server
+
+To start the development server, run:
+
+```sh
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+This will start the Vite development server, and you can view the application at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+In the `frontend` directory, you can run the following scripts:
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the app for production to the `dist` folder.
+- `npm run lint`: Lints the codebase using ESLint.
+- `npm run preview`: Serves the production build locally for preview.
+
+## Folder Structure
+
+The `src` directory is structured as follows:
+
 ```
+src/
+├── api/         # Functions for making API calls to the backend
+├── pages/       # Top-level page components
+├── App.tsx      # Main application component
+├── index.css    # Global CSS styles
+└── main.tsx     # Main entry point of the application
+```
+
+## Key Dependencies
+
+- **[React](https://react.dev/):** A JavaScript library for building user interfaces.
+- **[Vite](https://vitejs.dev/):** A fast build tool and development server.
+- **[TypeScript](https://www.typescriptlang.org/):** A typed superset of JavaScript.
+- **[Tailwind CSS](https://tailwindcss.com/):** A utility-first CSS framework.
+- **[React Router](https://reactrouter.com/):** For declarative routing in React.
+- **[Axios](https://axios-http.com/):** A promise-based HTTP client for the browser and Node.js.

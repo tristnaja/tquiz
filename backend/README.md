@@ -1,73 +1,99 @@
-# TQUIZ - Backend
+<div align="center">
+  <h1 style="font-size: 3rem; font-weight: bold;">TQUIZ - Backend</h1>
+  <p>The robust and scalable API for the TQUIZ application.</p>
+</div>
 
-This is the backend for the TQUIZ application, providing a robust and scalable API. It is built with Python using the FastAPI framework and interacts with a SQL database via SQLAlchemy.
+<p align="center">
+  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI Badge">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Badge">
+  <img src="https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white" alt="SQLAlchemy Badge">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Badge">
+</p>
+
+---
+
+This directory contains the backend for the TQUIZ application. It is built with Python using the high-performance [FastAPI](https://fastapi.tiangolo.com/) framework and interacts with a SQL database via [SQLAlchemy](https://www.sqlalchemy.org/).
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Running the Server](#running-the-server)
-- [API Endpoints](#api-endpoints)
-- [Folder Structure](#folder-structure)
-- [Key Dependencies](#key-dependencies)
+-   [Getting Started](#getting-started)
+    -   [Running with Docker](#running-with-docker)
+    -   [Manual Installation](#manual-installation)
+-   [Configuration](#configuration)
+-   [API Endpoints](#api-endpoints)
+-   [Folder Structure](#folder-structure)
+-   [Key Dependencies](#key-dependencies)
 
 ## Getting Started
 
-### Prerequisites
+### Running with Docker
 
-- [Python](https://www.python.org/) (v3.8 or higher)
-- [pip](https://pip.pypa.io/en/stable/installation/)
-- A running MySQL or other compatible SQL database instance.
+To run the backend service using Docker, ensure you have Docker and Docker Compose installed.
 
-### Installation
+1.  From the root of the project, run:
+    ```sh
+    docker-compose up --build backend
+    ```
+2.  The backend API will be available at `http://localhost:8000`.
+3.  Interactive API documentation can be accessed at `http://localhost:8000/docs`.
+
+### Manual Installation
+
+#### Prerequisites
+
+-   [Python](https://www.python.org/) (v3.8 or higher)
+-   [pip](https://pip.pypa.io/en/stable/installation/)
+-   A running MySQL instance or other compatible SQL database.
+
+#### Installation Steps
 
 1.  **Navigate to the `backend` directory.**
 
 2.  **Create and activate a virtual environment:**
-
     ```sh
     python -m venv venv
     source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
     ```
 
 3.  **Install dependencies:**
-
     ```sh
     pip install -r requirements.txt
     ```
 
-### Configuration
+4.  **Configure environment variables:**
+    Set up your `.env` file as described in the [Configuration](#configuration) section.
 
-Create a `.env` file inside the `backend/app` directory. This file will hold your environment-specific settings, such as database credentials and your JWT secret key.
+5.  **Run the development server:**
+    ```sh
+    uvicorn app.main:app --reload
+    ```
 
-Example `.env` file:
+## Configuration
 
-```
+Create a `.env` file inside the `backend/app` directory. This file stores environment-specific settings.
+
+**Example `.env` file:**
+
+```env
 DATABASE_URL="mysql+pymysql://user:password@host:port/database"
-SECRET_KEY="your_secret_key"
+SECRET_KEY="your_super_secret_key_for_jwt"
 ALGORITHM="HS256"
 ```
 
-### Running the Server
-
-To start the FastAPI development server, run the following command in the `backend` directory:
-
-```sh
-uvicorn app.main:app --reload
-```
-
-The API will be available at `http://127.0.0.1:8000`, and you can access the interactive API documentation at `http://127.0.0.1:8000/docs`.
+| Variable       | Description                                      |
+| :------------- | :----------------------------------------------- |
+| `DATABASE_URL` | The connection string for your SQL database.     |
+| `SECRET_KEY`   | A secret key for signing JWT tokens.             |
+| `ALGORITHM`    | The algorithm used for JWT signing (e.g., HS256). |
 
 ## API Endpoints
 
-The backend provides the following authentication endpoints:
+The backend provides the following core authentication endpoints:
 
-- `POST /auth/register`: Register a new user.
-- `POST /auth/login`: Log in a user and receive an access token via an HTTP-only cookie.
-- `GET /auth/me`: Get the current authenticated user's details.
-- `POST /auth/logout`: Log out the current user.
+-   `POST /auth/register`: Register a new user.
+-   `POST /auth/login`: Log in a user and receive an access token via an HTTP-only cookie.
+-   `GET /auth/me`: Get the current authenticated user's details.
+-   `POST /auth/logout`: Log out the current user.
 
 Quiz-related endpoints will be documented here as they are developed.
 
@@ -77,7 +103,6 @@ The `app` directory contains the core application logic:
 
 ```
 app/
-├── __init__.py
 ├── auth.py        # Authentication logic and routes
 ├── config.py      # Configuration management
 ├── database.py    # Database session management
@@ -89,8 +114,11 @@ app/
 
 ## Key Dependencies
 
-- **[FastAPI](https://fastapi.tiangolo.com/):** A modern, fast (high-performance) web framework for building APIs with Python.
-- **[SQLAlchemy](https://www.sqlalchemy.org/):** The Python SQL Toolkit and Object Relational Mapper.
-- **[Pydantic](https://docs.pydantic.dev/):** Data validation and settings management using Python type annotations.
-- **[python-jose](https://github.com/mpdavis/python-jose):** A library for JWT, JWS, JWE, JWK, and JWA in Python.
-- **[Passlib](https://passlib.readthedocs.io/en/stable/):** A library for password hashing.
+| Dependency                                                 | Description                                                                 |
+| :--------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| [FastAPI](https://fastapi.tiangolo.com/)                   | A modern, fast web framework for building APIs with Python.                 |
+| [SQLAlchemy](https://www.sqlalchemy.org/)                  | The Python SQL Toolkit and Object Relational Mapper.                        |
+| [Pydantic](https://docs.pydantic.dev/)                     | Data validation and settings management using Python type annotations.      |
+| [python-jose](https://github.com/mpdavis/python-jose)      | A library for JWT, JWS, JWE, JWK, and JWA in Python.                        |
+| [Passlib](https://passlib.readthedocs.io/en/stable/)       | A comprehensive library for password hashing.                               |
+| [PyMySQL](https://github.com/PyMySQL/PyMySQL)              | A pure-Python MySQL client library.                                         |

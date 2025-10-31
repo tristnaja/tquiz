@@ -53,6 +53,7 @@ __pycache__/
 # Distribution / packaging
 build/
 develop-eggs/
+deploy-eggs/
 dist/
 downloads/
 eggs/
@@ -133,3 +134,6 @@ Dockerfile~
 # ========================================
 Thumbs.db
 Desktop.ini
+
+# Gemini CLI specific
+.gemini/

@@ -45,10 +45,6 @@ function Quiz() {
             }, 1000);
         }
 
-        if (seconds === 0) {
-            console.log(index);
-        }
-
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
@@ -117,7 +113,6 @@ function Quiz() {
 
         if (index < questions.length - 1) {
             setIndex(prev => prev + 1);
-            console.log("handleAnswer: " + index);
             return;
         }
 
@@ -127,7 +122,6 @@ function Quiz() {
     function handleTimeout() {
         setIndex((prev) => {
             setUserAnswers((prevQ) => {
-                console.log("handleTimeout: " + prev);
                 const unanswered = questions.slice(prev).map((q) => ({
                     question: q.question,
                     userSelectedAnswer: null,
@@ -136,9 +130,6 @@ function Quiz() {
 
                 const updatedAnswer = [...prevQ, ...unanswered];
 
-                console.log(prevQ);
-                console.log(unanswered);
-                console.log(updatedAnswer);
                 finishQuiz(updatedAnswer);
 
                 return updatedAnswer
